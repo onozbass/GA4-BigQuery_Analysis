@@ -1,11 +1,11 @@
-SELECT DISTINCT
+SELECT
     FORMAT_TIMESTAMP('%Y/%m/%d %H:%M:%E6S', TIMESTAMP_MICROS(event_timestamp)) AS event_timestamp_utc,
     FORMAT_TIMESTAMP('%Y/%m/%d %H:%M:%E6S', TIMESTAMP_MICROS(event_timestamp), 'Asia/Tokyo') AS event_timestamp_jst,
-    event_date, -- ★日本時間基準に変更が必要？
+    event_date, -- ★日本時間基準に変更が必要？GA4プロパティのタイムゾーンに依存しているらしい
     event_name,
-    user_pseudo_id, -- users_tableと接続
+    user_pseudo_id,
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id') AS ga_session_id,
-    CONCAT(user_pseudo_id, '-', CAST(ga_session_id AS STRING)) AS session_id, -- sessions_tableと接続
+    CONCAT(user_pseudo_id, '-', CAST(ga_session_id AS STRING)) AS session_id,
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_number') AS ga_session_number,
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'batch_page_id') AS batch_page_id,
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'batch_ordering_id') AS batch_ordering_id,
@@ -13,7 +13,7 @@ SELECT DISTINCT
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'session_engaged') AS session_engaged,
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'engagement_time_msec') AS engagement_time_msec,
     (SELECT value.string_value FROM UNNEST(event_params) WHERE key = "engaged_session_event") AS engaged_session_event,
-    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = "page_location") AS page_location, -- pages_tableと接続
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = "page_location") AS page_location,
     (SELECT value.string_value FROM UNNEST(event_params) WHERE key = "page_title") AS page_title,
     (SELECT value.string_value FROM UNNEST(event_params) WHERE key = "page_referrer") AS page_referrer,
     (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'entrances') AS entrances,

@@ -1,8 +1,8 @@
 SELECT DISTINCT
     user_pseudo_id,
     first_visit_date,
-    MAX(PARSE_DATE('%Y/%m/%d', event_date)) AS last_seen_date,
     MIN(PARSE_DATE('%Y/%m/%d', event_date)) AS first_seen_date,
+    MAX(PARSE_DATE('%Y/%m/%d', event_date)) AS last_seen_date,
     COUNT(DISTINCT PARSE_DATE('%Y/%m/%d', event_date)) AS active_days,
 
     -- セッション数とイベント数

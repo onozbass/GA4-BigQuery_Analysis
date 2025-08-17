@@ -1,14 +1,14 @@
 SELECT 
     -- セッション識別子
     user_pseudo_id,
-    ga_session_id,
+    (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id') AS ga_session_id,
     CONCAT(user_pseudo_id, '-', ga_session_id) AS session_id,
 --    CONCAT(user_pseudo_id, '-', CAST(ga_session_id AS STRING)) AS session_id,
 
     -- 日時情報
     PARSE_DATE('%Y/%m/%d', event_date) AS session_date,
     TIMESTAMP_MICROS(MIN(event_timestamp)) AS session_start_time,
-    TIMESTAMP_MICROS(MAX(event_timestamp)) AS session_start_time,
+    TIMESTAMP_MICROS(MAX(event_timestamp)) AS session_end_time,
 --    MIN(TIMESTAMP_MICROS(event_timestamp)) AS session_start_time,
 --    MAX(TIMESTAMP_MICROS(event_timestamp)) AS session_end_time,
     TIMESTAMP_DIFF(
@@ -53,7 +53,7 @@ SELECT
     ARRAY_AGG(traffic_source.source ORDER BY event_timestamp ASC LIMIT 1)[OFFSET(0)] AS traffic_source,
     ARRAY_AGG(traffic_source.medium ORDER BY event_timestamp ASC LIMIT 1)[OFFSET(0)] AS traffic_medium,
     ARRAY_AGG(traffic_source.name ORDER BY event_timestamp ASC LIMIT 1)[OFFSET(0)] AS campaign_name,
-    
+
     ARRAY_AGG(
       IF(event_name = 'session_start',
          CONCAT(COALESCE(session_source, '(direct)'), ' / ', COALESCE(session_medium, '(none)')),
