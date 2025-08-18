@@ -70,17 +70,17 @@ SELECT
     -- ページタイプの分類
     CASE 
         WHEN page_path = '/' OR page_path IS NULL THEN 'Top'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/index.html|/jp/en/index.html)') THEN 'Top'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/360/|/jp/en/360/)') THEN '360'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/innovation/|/jp/en/innovation/)') THEN '360'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/company/|/jp/en/company/)') THEN 'Company'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/release/|/jp/en/release/)') THEN 'Release'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/sustainability/|/jp/en/sustainability/)') THEN 'Sustainability'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/ir/|/jp/en/ir/)') THEN 'IR'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/jp/ja/careers/|/jp/en/careers/)') THEN 'Careers'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/corporatebranding/)') THEN 'Corporate Branding'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/solution/)') THEN 'G&C'
-        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'(/wellness/)') THEN 'W'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/index.html|/jp/en/index.html)') THEN 'Top'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/360/|/jp/en/360/)') THEN '360'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/innovation/|/jp/en/innovation/)') THEN '360'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/company/|/jp/en/company/)') THEN 'Company'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/release/|/jp/en/release/)') THEN 'Release'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/sustainability/|/jp/en/sustainability/)') THEN 'Sustainability'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/ir/|/jp/en/ir/)') THEN 'IR'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/jp/ja/careers/|/jp/en/careers/)') THEN 'Careers'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/corporatebranding/)') THEN 'Corporate Branding'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/solution/)') THEN 'G&C'
+        WHEN REGEXP_CONTAINS(LOWER(IFNULL(page_path, '')), r'^(/wellness/)') THEN 'W'
         ELSE 'Other'
     END AS page_type,
     
